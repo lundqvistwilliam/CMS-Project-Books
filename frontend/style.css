@@ -1,0 +1,20 @@
+h1 {
+    text-align: center;
+}
+
+
+.book-card {
+    border:2px solid black;
+    width: 50%;
+    text-align: center;
+}
+
+#cover {
+    height: 200px;
+    width: 200px;
+    object-fit: fill;
+}
+
+.hidden {
+    display: none;
+}

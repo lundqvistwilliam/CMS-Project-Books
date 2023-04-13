@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ankademin Books</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+  />
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js" defer></script>
+    <script src="renderUserPage.js" defer></script>
+</head>
+<body>
+    <h1>Ankademin Books</h1>
+    <div id="book-info">
+    <button id="profileBtn">Your profile</button>
+    <div class="login">
+        <input type="text" id="identifier">
+        <input type="password" id="password">
+        <button id="loginBtn">Login</button>
+    </div>
+    <button id="logout" class="hidden">Log out</button>
+    <h3 id="loginText" class="hidden"></h3>
+    <h2>Our books:</h2>
+    <ul id="bookList"></ul>
+    <div id="books-container"></div>
+    <div id="readList-container" class="hidden">
+        <h3>Books on your read list</h3>
+        <ul id="read-list"></ul> 
+    </div>
+</div>
+    <div id="user-page" class="hidden">
+        <button id="mainPageBtn">Main page</button>
+        <p id="loginText"></p>
+    </div>
+    <h3 id="readListText" class="hidden">Books on your read list</h3>
+    <ul id="userpage-readlist"></ul>
+</body>
+</html>
