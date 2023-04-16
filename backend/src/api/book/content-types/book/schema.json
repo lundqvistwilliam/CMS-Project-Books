@@ -22,7 +22,8 @@
       "type": "integer"
     },
     "rating": {
-      "type": "decimal"
+      "type": "decimal",
+      "default": 0
     },
     "releasedate": {
       "type": "date"
