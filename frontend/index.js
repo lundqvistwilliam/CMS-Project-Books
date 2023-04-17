@@ -1,20 +1,25 @@
+let loginBox = document.querySelector(".login");
+let logoutBtn = document.querySelector("#logout");
+
 let renderPage = async () => {
   let response = await axios.get("http://localhost:1337/api/books?populate=*");
   const books = response.data.data;
   const bookList = document.querySelector("#bookList");
 
   if(sessionStorage.getItem("token")){
-    document.querySelector(".login").classList.add("hidden");
-    document.querySelector("#logout").classList.remove("hidden")
+    loginBox.classList.add("hidden");
+    logoutBtn.classList.remove("hidden")
     document.querySelector("#loginText").classList.remove("hidden")
+    document.querySelector("#registerText").classList.add("hidden")
     document.querySelector("#loginText").innerText=`Signed in as ${identifier.value}`
     bookList.innerHTML = "";
     document.querySelector("#read-list").innerHTML = "";
   } else {
     document.querySelector("#logout").classList.add("hidden")
-    document.querySelector(".login").classList.remove("hidden")
+    loginBox.classList.remove("hidden")
     document.querySelector("#readList-container").classList.add("hidden")
     document.querySelector("#loginText").classList.add("hidden");
+    document.querySelector("#profileBtn").classList.add("hidden");
     bookList.innerHTML = "";
     document.querySelector("#read-list").innerHTML = "";
 
@@ -33,10 +38,10 @@ let renderPage = async () => {
     bookInfo.innerHTML += `
       <h3>${book.attributes.title}</h3>
       <h4>${book.attributes.author}</h4>
+      <img src="http://localhost:1337${book.attributes.cover.data.attributes.url}" id="cover" /><br>
       <b>Pages</b>: ${book.attributes.pages}<br>
       <b>Avg Rating</b>: ${book.attributes.rating}<br>
       <b>Release date</b>: ${book.attributes.releasedate}<br>
-      <img src="http://localhost:1337${book.attributes.cover.data.attributes.url}" id="cover" />
       <br>
     `
     let ratingBtnId = `ratingBtn_` + book.id
@@ -45,7 +50,7 @@ let renderPage = async () => {
       bookInfo.innerHTML+=`<i class="fa-regular fa-bookmark"></i>
       <button onclick="addToReadList(${book.id})">Add to read list</button>
       <br>
-      <input type="number" min="1" max="10" id="${ratingBtnId}"></input>
+      <input type="number" min="1" max="10" id="${ratingBtnId}" placeholder="Rating"></input>
       <button type="submit" id="submitRatingBtn" onclick="submitRating(${book.id})">Submit rating</button>
       `
     } else {
@@ -83,6 +88,8 @@ const logout = async () => {
   sessionStorage.clear();
   document.querySelector("#profileBtn").classList.add("hidden");
   renderPage();
+  document.querySelector("#registerText").classList.remove("hidden")
+
 }
 
 let addToReadList = async (id) => {

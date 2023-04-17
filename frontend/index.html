@@ -10,9 +10,13 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
   />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500&family=Inter:wght@200;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="index.js" defer></script>
     <script src="renderUserPage.js" defer></script>
+    <script src="registerUser.js" defer></script>
 </head>
 <body>
     <header class="header">
@@ -27,10 +31,19 @@
     </div>
     <div id="book-info">
     <div class="login">
-        <input type="text" id="identifier">
-        <input type="password" id="password">
+        <input type="text" id="identifier" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
         <button id="loginBtn">Login</button>
+        <!-- <button id="registerBtn">Register</button> -->
     </div>
+    <h6 id="registerText">Don't have an account? Create an account for free <span id="registerSpanText">here</span></h6>
+    <div id="register-box" class="hidden">
+        <h2>Register</h2>
+        <input type="text" id="username" placeholder="Username"><br>
+        <input type="text" id="email" placeholder="Email"><br>
+        <input type="password" id="registerPassword" placeholder="Password"><br>
+        <button id="register">Register</button>
+        </div>
     <h3 id="loginText" class="hidden"></h3>
     <h2>Our books:</h2>
     <ul id="bookList"></ul>
@@ -41,7 +54,9 @@
     </div>
 </div>
     <div id="user-page" class="hidden">
-        <button id="mainPageBtn">Main page</button>
+        <button id="mainPageBtn">Main page</button><br>
+        <!-- <button>Your read list</button>
+        <button>Your ratings</button> -->
         <p id="loginText"></p>
     </div>
     <h3 id="readListText" class="hidden">Books on your read list</h3>

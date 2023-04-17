@@ -18,7 +18,6 @@ document.querySelector("#mainPageBtn").addEventListener("click", () => {
     document.querySelector("#readList-container").classList.add("hidden");
     document.querySelector("#userpage-readlist").classList.add("hidden");
     document.querySelector("#readListText").classList.add("hidden");
-
 })
 
 let printReadList = async () => {
