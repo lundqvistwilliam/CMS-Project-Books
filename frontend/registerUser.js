@@ -6,7 +6,6 @@ let registerBox = document.querySelector("#register-box");
 let registerBtn = document.querySelector("#register");
 
 registerText.addEventListener("click", () => {
-    console.log("Hej")
     document.querySelector("#registerText").classList.add("hidden")
     registerBox.classList.remove("hidden")
     document.querySelector(".login").classList.add("hidden")
@@ -28,8 +27,6 @@ let register = async () => {
      registerBox.classList.add("hidden");
      document.querySelector(".login").classList.remove("hidden")
 }
-
-   
 
 registerBtn.addEventListener("click", register)
 

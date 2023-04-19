@@ -157,6 +157,16 @@ body.dark {
     background-color: antiquewhite;
 }
 
+#addToReadListBtn:hover{
+    transition: 220ms all ease-in-out;
+    opacity: 90%;
+}
+
+button:hover {
+    transition: 220ms all ease-in-out;
+    opacity: 90%;
+}
+
 #submitRatingBtn {
     background-color: rgba(173, 216, 230, 0.305);
     border: 1px solid black;
@@ -168,6 +178,7 @@ body.dark {
     text-decoration: underline;
     text-decoration-color: orange;
     font-size: 20px;
+    transition: 200ms all ease-in-out;
 }
 #yourRatingBtn.active {
     height: 30px;

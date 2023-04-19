@@ -1,8 +1,12 @@
 let loginBox = document.querySelector(".login");
 let logoutBtn = document.querySelector("#logout");
+let loginBtn = document.querySelector("#loginBtn");
+
+let profileBtn =  document.querySelector("#profileBtn");
 
 let listofBooks = [];
 let books = []
+
 
 
 let renderPage = async () => {
@@ -18,24 +22,20 @@ let renderPage = async () => {
   if(sessionStorage.getItem("token")){
     loginBox.classList.add("hidden");
     logoutBtn.classList.remove("hidden")
-    document.querySelector("#loginText").classList.remove("hidden")
+    loginText.classList.remove("hidden")
     document.querySelector("#registerText").classList.add("hidden")
-    document.querySelector("#loginText").innerText=`Signed in as ${currentUser.data.username}`
+    loginText.innerText=`Signed in as ${currentUser.data.username}`
     bookList.innerHTML = "";
     document.querySelector("#read-list").innerHTML = "";
   } else {
-    document.querySelector("#logout").classList.add("hidden")
+    logoutBtn.classList.add("hidden")
     loginBox.classList.remove("hidden")
     document.querySelector("#readList-container").classList.add("hidden")
     document.querySelector("#loginText").classList.add("hidden");
-    document.querySelector("#profileBtn").classList.add("hidden");
+    profileBtn.classList.add("hidden");
     bookList.innerHTML = "";
     document.querySelector("#read-list").innerHTML = "";
-
   }
-
-  
-  // let addedToReadList = response.data.data.filter(book => book.attributes.onreadlist)
 
   let bookCounter = 0
 
@@ -78,7 +78,6 @@ let renderPage = async () => {
     bookList.append(row);
   }
   });
-  // console.log(sessionStorage.getItem("loginId"))
 }
 
 const login = async () => {
@@ -91,38 +90,21 @@ const login = async () => {
     });
         sessionStorage.setItem("token", response.data.jwt);
         sessionStorage.setItem("loginId", response.data.user.id);
-        // document.querySelector("#loginText").innerText=`Signed in as ${identifier.value}`
-        document.querySelector("#profileBtn").classList.remove("hidden")
+        profileBtn.classList.remove("hidden")
         renderPage();
 }
 
 const logout = async () => {
   sessionStorage.clear();
-  document.querySelector("#profileBtn").classList.add("hidden");
+  profileBtn.classList.add("hidden");
   renderPage();
   document.querySelector("#registerText").classList.remove("hidden")
 
 }
 
 let addToReadList = async (id) => {
-  // await axios.put(`http://localhost:1337/api/books/${id}`,
-  // {
-  //     data:{
-  //         onreadlist:true
-  //     },
-  // },
-  // {
-  //     headers: {
-  //         Authorization: `Bearer ${sessionStorage.getItem("token")}`
-  //     }
-  // }
-  // )
- 
-  // renderPage();
-
    const userId = sessionStorage.getItem("loginId");
    
-
    if(!listofBooks){
     listofBooks = []
    } 
@@ -132,9 +114,7 @@ let addToReadList = async (id) => {
 
    await axios.put(`http://localhost:1337/api/users/${userId}`,
    {
-          
-          readlist:listofBooks,
-          
+          readlist:listofBooks,      
       },
       {
           headers: {
@@ -143,11 +123,8 @@ let addToReadList = async (id) => {
       }
    )
    renderPage();
-    }
+}
   
-
-
-
 let submitRating = async (id) => {
   const userId = sessionStorage.getItem("loginId")
   let rating = document.querySelector("#ratingBtn_" + id).value;
@@ -158,7 +135,6 @@ let submitRating = async (id) => {
     console.log("No book found with id" + id)
     return;
   }
-
   let currentRatings = book.attributes.userratings
   if(!currentRatings){
     currentRatings= []
@@ -215,26 +191,9 @@ const applyTheme = async() => {
   header.classList.add(theme)
 }
 
-let setReadList = async (id) => {
-  // await axios.put(`http://localhost:1337/api/users/${id}`,
-  // {
-  //     data:{
-  //         readlist: JSON.stringify(id),
-  //     },
-  // },
-  // {
-  //     headers: {
-  //         Authorization: `Bearer ${sessionStorage.getItem("token")}`
-  //     }
-  // }
-  // )
-  // renderPage();
- 
-}
 
-
-document.querySelector("#loginBtn").addEventListener("click",login);
-document.querySelector("#logout").addEventListener("click",logout);
+loginBtn.addEventListener("click",login);
+logoutBtn.addEventListener("click",logout);
 
 renderPage();
 applyTheme();

@@ -31,7 +31,6 @@
         <input type="text" id="identifier" placeholder="Username">
         <input type="password" id="password" placeholder="Password">
         <button id="loginBtn">Login</button>
-        <!-- <button id="registerBtn">Register</button> -->
     </div>
     <h6 id="registerText">Don't have an account? Create an account for free <span id="registerSpanText">here</span></h6>
     <div id="register-box" class="hidden">
@@ -60,7 +59,7 @@
     <h3 id="readListText" class="hidden">Books on your read list</h3>
     <ul id="userpage-readlist"></ul>
 </div>
-<div id="userpage-yourRatings-box">
+<div id="userpage-yourRatings-box" class="hidden">
    <h2>Your ratings</h2>
    <label for="sortOptions">Sort by</label>
    <select id="sortOptions">
@@ -69,6 +68,7 @@
     <option>Title A-Ö</option>
     <option>Rating</option>
    </select>
+   <button id="reverseBtn">Reverse</button>
    <ul id="userpage-ratinglist"></ul>
 </body>
 </html>
