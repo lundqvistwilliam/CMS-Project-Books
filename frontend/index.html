@@ -6,13 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ankademin Books</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-  />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500&family=Inter:wght@200;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500&family=Inter:wght@200;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="index.js" defer></script>
     <script src="renderUserPage.js" defer></script>
@@ -54,12 +51,24 @@
     </div>
 </div>
     <div id="user-page" class="hidden">
-        <button id="mainPageBtn">Main page</button><br>
+        <button id="mainPageBtn"><i class="fa-solid fa-arrow-left"></i> Main page</button><br>
         <button id="yourReadListBtn">Your read list</button>
         <button id="yourRatingBtn">Your ratings</button>
         <p id="loginText"></p>
     </div>
+    <div id="userpage-readlist-box">
     <h3 id="readListText" class="hidden">Books on your read list</h3>
     <ul id="userpage-readlist"></ul>
+</div>
+<div id="userpage-yourRatings-box">
+   <h2>Your ratings</h2>
+   <label for="sortOptions">Sort by</label>
+   <select id="sortOptions">
+    <option selected>All</option>
+    <option>Author A-Ö</option>
+    <option>Title A-Ö</option>
+    <option>Rating</option>
+   </select>
+   <ul id="userpage-ratinglist"></ul>
 </body>
 </html>

@@ -2,23 +2,25 @@ let loginBox = document.querySelector(".login");
 let logoutBtn = document.querySelector("#logout");
 
 let listofBooks = [];
+let books = []
 
 
 let renderPage = async () => {
   let response = await axios.get("http://localhost:1337/api/books?populate=*");
-  const books = response.data.data;
+  books = response.data.data;
   const bookList = document.querySelector("#bookList");
 
   let userId = sessionStorage.getItem("loginId")
   let currentUser = await axios.get(`http://localhost:1337/api/users/${userId}`);
   listofBooks = currentUser.data.readlist;
   
+  
   if(sessionStorage.getItem("token")){
     loginBox.classList.add("hidden");
     logoutBtn.classList.remove("hidden")
     document.querySelector("#loginText").classList.remove("hidden")
     document.querySelector("#registerText").classList.add("hidden")
-    document.querySelector("#loginText").innerText=`Signed in as ${identifier.value}`
+    document.querySelector("#loginText").innerText=`Signed in as ${currentUser.data.username}`
     bookList.innerHTML = "";
     document.querySelector("#read-list").innerHTML = "";
   } else {
@@ -40,14 +42,15 @@ let renderPage = async () => {
   books.forEach(book => {
     const bookInfo = document.createElement("li");
     bookInfo.className = 'book-info';
-
+    
+    let rating = calculateAverageRating(book)
     
     bookInfo.innerHTML += `
       <h3>${book.attributes.title}</h3>
       <h4>${book.attributes.author}</h4>
       <img src="http://localhost:1337${book.attributes.cover.data.attributes.url}" id="cover" /><br>
       <b>Pages</b>: ${book.attributes.pages}<br>
-      <b>Rating</b>: ${book.attributes.rating}<br>
+      <b>Avg Rating</b>: ${rating}<br>
       <b>Release date</b>: ${book.attributes.releasedate}<br>
       <br>
     `
@@ -55,8 +58,8 @@ let renderPage = async () => {
 
 
     if(sessionStorage.getItem("token")){
-      bookInfo.innerHTML+=`<i class="fa-regular fa-bookmark"></i>
-      <button onclick="addToReadList(${book.id})">Add to read list</button>
+      bookInfo.innerHTML+=`
+      <button onclick="addToReadList(${book.id})" id="addToReadListBtn">Add to read list</button>
       <br>
       <input type="number" min="1" max="10" id="${ratingBtnId}" placeholder="Rating"></input>
       <button type="submit" id="submitRatingBtn" onclick="submitRating(${book.id})">Submit rating</button>
@@ -88,7 +91,7 @@ const login = async () => {
     });
         sessionStorage.setItem("token", response.data.jwt);
         sessionStorage.setItem("loginId", response.data.user.id);
-        document.querySelector("#loginText").innerText=`Signed in as ${identifier.value}`
+        // document.querySelector("#loginText").innerText=`Signed in as ${identifier.value}`
         document.querySelector("#profileBtn").classList.remove("hidden")
         renderPage();
 }
@@ -146,11 +149,36 @@ let addToReadList = async (id) => {
 
 
 let submitRating = async (id) => {
+  const userId = sessionStorage.getItem("loginId")
+  let rating = document.querySelector("#ratingBtn_" + id).value;
+
+  let book = books.find((book) => book.id===id);
+
+  if(!book){
+    console.log("No book found with id" + id)
+    return;
+  }
+
+  let currentRatings = book.attributes.userratings
+  if(!currentRatings){
+    currentRatings= []
+  }
+
+  let userRating = currentRatings.find((currentRating) => currentRating.user_id == userId)
+  if(userRating){
+    userRating.rating= rating
+  } else {
+
+  currentRatings.push({
+    user_id: userId,
+    rating:rating
+  })
+}
   
   await axios.put(`http://localhost:1337/api/books/${id}`,
   {
       data:{
-          rating:document.querySelector("#ratingBtn_" + id).value
+          userratings:currentRatings
       },
   },
   {
@@ -160,6 +188,22 @@ let submitRating = async (id) => {
   }
   )
   renderPage();
+}
+
+let calculateAverageRating = (book) => {
+  let totalRating = 0;
+
+  if(!book || !book.attributes || !book.attributes.userratings){
+    return 0;
+  }
+
+  for(let i=0; i<book.attributes.userratings.length; i++){
+    let userrating = book.attributes.userratings[i]
+    totalRating +=parseInt(userrating.rating)
+  }
+  totalRating = totalRating / book.attributes.userratings.length;
+  return totalRating.toFixed(2)
+
 }
 
 const applyTheme = async() => {

@@ -34,7 +34,7 @@ h1 {
     margin: 10px;
     text-align: center;
     background-color: #f0f0f02e;
-  }
+}
   
 #cover {
     height: 200px;
@@ -133,8 +133,8 @@ body.dark {
 #yourReadListBtn {
     background: none;
     border: none;
-    background: #f0f0f0;
 }
+
 
 #yourReadListBtn:hover {
     text-decoration: underline;
@@ -143,10 +143,44 @@ body.dark {
 #yourRatingBtn {
     background: none;
     border: none;
-    background: #f0f0f0;
 }
 
 #yourRatingBtn:hover {
     text-decoration: underline;
 }
 
+#addToReadListBtn {
+    border-radius: 5px;
+    border: 1px solid black;
+    margin-bottom: 2px;
+    height: 25px;
+    background-color: antiquewhite;
+}
+
+#submitRatingBtn {
+    background-color: rgba(173, 216, 230, 0.305);
+    border: 1px solid black;
+
+}
+
+#yourReadListBtn.active {
+    height: 30px;
+    text-decoration: underline;
+    text-decoration-color: orange;
+    font-size: 20px;
+}
+#yourRatingBtn.active {
+    height: 30px;
+    text-decoration: underline;
+    text-decoration-color: orange;
+    font-size: 20px;
+}
+
+#mainPageBtn {
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+#userpage-readlist li {
+    list-style: none;
+}
