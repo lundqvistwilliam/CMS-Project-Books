@@ -1,11 +1,18 @@
 let loginBox = document.querySelector(".login");
 let logoutBtn = document.querySelector("#logout");
 
+let listofBooks = [];
+
+
 let renderPage = async () => {
   let response = await axios.get("http://localhost:1337/api/books?populate=*");
   const books = response.data.data;
   const bookList = document.querySelector("#bookList");
 
+  let userId = sessionStorage.getItem("loginId")
+  let currentUser = await axios.get(`http://localhost:1337/api/users/${userId}`);
+  listofBooks = currentUser.data.readlist;
+  
   if(sessionStorage.getItem("token")){
     loginBox.classList.add("hidden");
     logoutBtn.classList.remove("hidden")
@@ -40,11 +47,12 @@ let renderPage = async () => {
       <h4>${book.attributes.author}</h4>
       <img src="http://localhost:1337${book.attributes.cover.data.attributes.url}" id="cover" /><br>
       <b>Pages</b>: ${book.attributes.pages}<br>
-      <b>Avg Rating</b>: ${book.attributes.rating}<br>
+      <b>Rating</b>: ${book.attributes.rating}<br>
       <b>Release date</b>: ${book.attributes.releasedate}<br>
       <br>
     `
     let ratingBtnId = `ratingBtn_` + book.id
+
 
     if(sessionStorage.getItem("token")){
       bookInfo.innerHTML+=`<i class="fa-regular fa-bookmark"></i>
@@ -67,6 +75,7 @@ let renderPage = async () => {
     bookList.append(row);
   }
   });
+  // console.log(sessionStorage.getItem("loginId"))
 }
 
 const login = async () => {
@@ -93,24 +102,51 @@ const logout = async () => {
 }
 
 let addToReadList = async (id) => {
-  await axios.put(`http://localhost:1337/api/books/${id}`,
-  {
-      data:{
-          onreadlist:true
-      },
-  },
-  {
-      headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`
-      }
-  }
-  )
+  // await axios.put(`http://localhost:1337/api/books/${id}`,
+  // {
+  //     data:{
+  //         onreadlist:true
+  //     },
+  // },
+  // {
+  //     headers: {
+  //         Authorization: `Bearer ${sessionStorage.getItem("token")}`
+  //     }
+  // }
+  // )
  
-  renderPage();
-}
+  // renderPage();
+
+   const userId = sessionStorage.getItem("loginId");
+   
+
+   if(!listofBooks){
+    listofBooks = []
+   } 
+   if(!listofBooks.includes(id)){
+    listofBooks.push(id)
+   }
+
+   await axios.put(`http://localhost:1337/api/users/${userId}`,
+   {
+          
+          readlist:listofBooks,
+          
+      },
+      {
+          headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`
+          }
+      }
+   )
+   renderPage();
+    }
+  
+
 
 
 let submitRating = async (id) => {
+  
   await axios.put(`http://localhost:1337/api/books/${id}`,
   {
       data:{
@@ -126,9 +162,36 @@ let submitRating = async (id) => {
   renderPage();
 }
 
+const applyTheme = async() => {
+  let response = await axios.get("http://localhost:1337/api/displaytheme");
+  let theme = response.data.data.attributes.theme;
+
+  document.body.classList.add(theme); 
+  const header = document.querySelector('header');
+  header.classList.add(theme)
+}
+
+let setReadList = async (id) => {
+  // await axios.put(`http://localhost:1337/api/users/${id}`,
+  // {
+  //     data:{
+  //         readlist: JSON.stringify(id),
+  //     },
+  // },
+  // {
+  //     headers: {
+  //         Authorization: `Bearer ${sessionStorage.getItem("token")}`
+  //     }
+  // }
+  // )
+  // renderPage();
+ 
+}
+
 
 document.querySelector("#loginBtn").addEventListener("click",login);
 document.querySelector("#logout").addEventListener("click",logout);
 
 renderPage();
+applyTheme();
 

@@ -121,3 +121,32 @@ header {
     }
 }
 
+body.dark {
+    background:  #1F1B24;
+    color:white;
+}
+
+.header.dark {
+    background-color: black;
+}
+
+#yourReadListBtn {
+    background: none;
+    border: none;
+    background: #f0f0f0;
+}
+
+#yourReadListBtn:hover {
+    text-decoration: underline;
+}
+
+#yourRatingBtn {
+    background: none;
+    border: none;
+    background: #f0f0f0;
+}
+
+#yourRatingBtn:hover {
+    text-decoration: underline;
+}
+

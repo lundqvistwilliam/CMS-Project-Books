@@ -1,0 +1,24 @@
+{
+  "kind": "singleType",
+  "collectionName": "displaythemes",
+  "info": {
+    "singularName": "displaytheme",
+    "pluralName": "displaythemes",
+    "displayName": "displaytheme",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "theme": {
+      "type": "enumeration",
+      "enum": [
+        "dark",
+        "light"
+      ],
+      "default": "light"
+    }
+  }
+}

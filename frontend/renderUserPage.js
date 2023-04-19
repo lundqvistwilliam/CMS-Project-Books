@@ -21,6 +21,8 @@ document.querySelector("#mainPageBtn").addEventListener("click", () => {
 })
 
 let printReadList = async () => {
+
+    
     let response = await axios.get("http://localhost:1337/api/books?populate=*");
 
     let addedToReadList = response.data.data.filter(book => book.attributes.onreadlist)
@@ -36,6 +38,49 @@ let printReadList = async () => {
         <button onclick="deleteFromReadList(${book.id})">Remove from read list</button>
     `;
 });
+
+
+listofBooks.forEach(async (book) => {
+    let listBookId = book;
+    console.log(listofBooks)
+    let getBooks = await axios.get(`http://localhost:1337/api/books/${listBookId}`);
+    if (getBooks.data) {
+        document.querySelector("#userpage-readlist").innerHTML += `<li>
+        <b>Title</b>: ${getBooks.data.data.attributes.title}<br>
+        <b>Author</b>: ${getBooks.data.data.attributes.author}<br>
+        </li><br>
+        <button onclick="removeFromReadList(${listBookId})">Remove from read list</button>
+
+    `;
+      } else {
+        console.log("Error: API response is undefined");
+      }
+
+});
+const userId = sessionStorage.getItem("loginId");
+
+await axios.put(`http://localhost:1337/api/users/${userId}`,
+   {
+          
+          readlist:listofBooks,
+          
+      },
+      {
+          headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`
+          }
+      }
+   )
+   renderPage();
+}
+
+let removeFromReadList = async(id) => {
+    for( let i = 0; i < listofBooks.length; i++){ 
+        if ( listofBooks[i] === id) { 
+            listofBooks.splice(i, 1); 
+        }
+    }
+    printReadList();
 }
 
 

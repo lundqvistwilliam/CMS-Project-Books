@@ -40,6 +40,9 @@
     "onreadlist": {
       "type": "boolean",
       "default": false
+    },
+    "userratings": {
+      "type": "json"
     }
   }
 }
