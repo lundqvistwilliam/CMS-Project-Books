@@ -129,6 +129,12 @@ body.dark {
 .header.dark {
     background-color: black;
 }
+#yourRatingBtn.dark {
+    color:white;
+}
+#yourReadListBtn.dark {
+    color:white;
+}
 
 #yourReadListBtn {
     background: none;

@@ -189,6 +189,9 @@ const applyTheme = async() => {
   document.body.classList.add(theme); 
   const header = document.querySelector('header');
   header.classList.add(theme)
+  document.querySelector("#yourRatingBtn").classList.add(theme)
+  document.querySelector("#yourReadListBtn").classList.add(theme)
+  
 }
 
 
